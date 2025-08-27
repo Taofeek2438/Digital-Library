@@ -6,13 +6,15 @@ import { User } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from 'src/common/guards/jwt.strategy';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: "your_secret_here",
-      signOptions: { expiresIn: '1h' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: `${process.env.JWT_EXPIRES}` },
     }),
     TypeOrmModule.forFeature([User]),
   ],
