@@ -18,7 +18,7 @@ export class UsersController {
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.USER)
-    @Get('borrowed-books')
+    @Get('me/borrowed-books')
     async getMyBorrowed(@Query() paginationRequest: PaginationRequest) {
         return this.booksService.findBorrowedBooks(paginationRequest);
     }
