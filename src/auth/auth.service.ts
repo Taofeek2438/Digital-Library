@@ -54,14 +54,12 @@ export class AuthService {
     const payload = { email: user.email, sub: user.id, role: user.role };
     const accessToken = this.jwtService.sign(payload);
 
-    // Decode token to extract expiration
     const decoded: any = this.jwtService.decode(accessToken);
-    const exp = decoded['exp']; // seconds since epoch
+    const exp = decoded['exp']; 
     const now = Math.floor(Date.now() / 1000);
 
     const remainingSeconds = exp - now;
 
-    // Convert remaining seconds to human-readable string
     const humanReadableExpiry = this.formatExpiry(remainingSeconds);
 
     return new StandardResponse(

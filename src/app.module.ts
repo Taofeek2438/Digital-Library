@@ -12,12 +12,11 @@ import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
-    // Database connection setup
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'library.db',
       entities: [User, Book, Borrow],
-      synchronize: true, // Auto-create tables (disable in production)
+      synchronize: true, 
     }),
     ThrottlerModule.forRoot({
       throttlers: [
@@ -28,7 +27,6 @@ import { ThrottlerModule } from '@nestjs/throttler';
       ],
     }),
 
-    // Application modules
     AuthModule,
     UsersModule,
     BooksModule,

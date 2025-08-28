@@ -21,7 +21,6 @@ export class UsersService {
             );
         }
 
-        // Prevent redundant role updates
         if (user.role === updateRoleDto.role) {
             return new StandardResponse(
             false,

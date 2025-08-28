@@ -26,7 +26,6 @@ export class BooksService {
     private readonly OPEN_LIBRARY_API = 'https://openlibrary.org/search.json';
 
     async findAll(paginationRequest: PaginationRequest) {
-        // Apply defaults if not provided or invalid
         const page = paginationRequest?.page && paginationRequest.page > 0 ? paginationRequest.page : 1;
         const size = paginationRequest?.size && paginationRequest.size > 0 ? paginationRequest.size : 10;
 
@@ -109,11 +108,9 @@ export class BooksService {
         const authenticatedUser = await this.commonService.getLoggedInUser();
         const userId = authenticatedUser.id;
 
-        // 1. Get pagination params from query (with defaults)
         const page = paginationRequest.page && paginationRequest.page > 0 ? paginationRequest.page : 1;
         const size = paginationRequest.size && paginationRequest.size > 0 ? paginationRequest.size : 10;
 
-        // 2. Fetch borrowed books with pagination
         const [borrowedBooks, total] = await this.borrowRepo.findAndCount({
             where: { user: { id: userId } },
             relations: ['book'],
@@ -121,7 +118,6 @@ export class BooksService {
             take: size,
         });
 
-        // 3. Wrap in StandardResponse with pagination
         return StandardResponse.withPagination(
             "Borrowed books fetched successfully",
             borrowedBooks,
@@ -139,7 +135,6 @@ export class BooksService {
             );
         }
 
-        // Ensure default pagination values
         const page = paginationRequest?.page && paginationRequest.page > 0 ? paginationRequest.page : 1;
         const size = paginationRequest?.size && paginationRequest.size > 0 ? paginationRequest.size : 10;
 
